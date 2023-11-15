@@ -3,6 +3,40 @@ server:
   servlet:
     context-path: /api/worker
 
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://mysql-service-address:3306/conductor?useUnicode=true&characterEncoding=utf8&autoReconnect=true&useSSL=false
+    username: root
+    password: Mysql123Conductor
+  flyway:
+    enabled: true
+    clean-disabled: true
+    locations: classpath:db/migration
+    schemas: conductor
+    table: t_worker_flyway_schema_history
+    baseline-on-migrate: true
+    baseline-version: 1
+    encoding: UTF-8
+    out-of-order: false
+    validate-on-migrate: true
+    placeholder-replacement: false
+
+conductor:
+  client:
+    rootUri: http://conductor-server:5000/api/
+    thread-count: 32
+  worker:
+    all:
+      domain: local
+      pollingInterval: 3000
+      username: ${CONDUCTOR_USERNAME:conductor}
+      password: ${CONDUCTOR_PASSWORD:Conductor123}
+      # Soft barrier for workflow input payload in KB
+      workflowInputPayloadThresholdKB: 7680
+      # Soft barrier for task output payload in KB
+      taskOutputPayloadThresholdKB: 5120
+
 management:
   endpoint:
     health:
