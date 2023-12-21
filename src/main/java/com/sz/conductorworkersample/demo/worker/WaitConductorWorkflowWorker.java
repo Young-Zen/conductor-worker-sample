@@ -14,6 +14,10 @@ import com.sz.conductorworkersample.demo.config.WorkerProperties;
 
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * @author Yanghj
+ * @date 2023/12/21 19:32
+ */
 @Slf4j
 @Component
 public class WaitConductorWorkflowWorker implements Worker {

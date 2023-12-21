@@ -2,6 +2,7 @@ plugins {
     id 'org.springframework.boot' version '2.7.6'
     id 'io.spring.dependency-management' version '1.0.15.RELEASE'
     id 'java'
+    id 'pmd'
     id "com.diffplug.spotless" version "6.23.3"
 }
 
@@ -11,6 +12,23 @@ sourceCompatibility = '11'
 
 ext {
     conductorVersion = '3.13.8'
+}
+
+pmd {
+    consoleOutput = true
+    reportsDir = file("build/reports/pmd")
+    ruleSets = [
+            "java-ali-comment",
+            "java-ali-concurrent",
+            "java-ali-constant",
+            "java-ali-exception",
+            "java-ali-flowcontrol",
+            "java-ali-naming",
+            "java-ali-oop",
+            "java-ali-orm",
+            "java-ali-other",
+            "java-ali-set"
+    ]
 }
 
 configure(allprojects) {
@@ -64,6 +82,7 @@ dependencies {
 
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
+    pmd "com.alibaba.p3c:p3c-pmd:2.1.1"
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 

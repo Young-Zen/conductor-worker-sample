@@ -9,6 +9,10 @@ import org.springframework.util.StringUtils;
 
 import com.netflix.conductor.client.spring.ConductorClientAutoConfiguration;
 
+/**
+ * @author Yanghj
+ * @date 2023/12/21 19:32
+ */
 @Component
 public class ConductorWorkerDomainBeanPostProcessor implements BeanPostProcessor {
 

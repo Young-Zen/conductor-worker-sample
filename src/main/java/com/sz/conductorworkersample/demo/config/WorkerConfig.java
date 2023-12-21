@@ -15,6 +15,10 @@ import com.sun.jersey.api.client.filter.HTTPBasicAuthFilter;
 
 import lombok.AllArgsConstructor;
 
+/**
+ * @author Yanghj
+ * @date 2023/12/21 19:32
+ */
 @Configuration
 public class WorkerConfig {
 
@@ -26,7 +30,7 @@ public class WorkerConfig {
                         new DefaultClientConfig(),
                         this.getConductorClientConfiguration(workerProperties),
                         null,
-                        this.getClientHTTPBasicAuthFilter(workerProperties));
+                        this.getHttpBasicAuthClientFilter(workerProperties));
         workflowClient.setRootURI(clientProperties.getRootUri());
         return workflowClient;
     }
@@ -39,12 +43,12 @@ public class WorkerConfig {
                         new DefaultClientConfig(),
                         this.getConductorClientConfiguration(workerProperties),
                         null,
-                        this.getClientHTTPBasicAuthFilter(workerProperties));
+                        this.getHttpBasicAuthClientFilter(workerProperties));
         taskClient.setRootURI(clientProperties.getRootUri());
         return taskClient;
     }
 
-    private ClientFilter[] getClientHTTPBasicAuthFilter(WorkerProperties workerProperties) {
+    private ClientFilter[] getHttpBasicAuthClientFilter(WorkerProperties workerProperties) {
         if (StringUtils.hasText(workerProperties.getUsername())
                 && StringUtils.hasText(workerProperties.getPassword())) {
             return new HTTPBasicAuthFilter[] {
@@ -62,6 +66,7 @@ public class WorkerConfig {
                 workerProperties.getTaskOutputPayloadThresholdKB());
     }
 
+    @SuppressWarnings("PMD")
     @AllArgsConstructor
     class CustomConductorClientConfiguration extends DefaultConductorClientConfiguration {
 
