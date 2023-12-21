@@ -1,21 +1,22 @@
 package com.sz.conductorworkersample.demo.config;
 
-import com.netflix.conductor.client.spring.ConductorClientAutoConfiguration;
+import javax.annotation.Resource;
+
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
-import javax.annotation.Resource;
+import com.netflix.conductor.client.spring.ConductorClientAutoConfiguration;
 
 @Component
 public class ConductorWorkerDomainBeanPostProcessor implements BeanPostProcessor {
 
-    @Resource
-    private WorkerProperties workerProperties;
+    @Resource private WorkerProperties workerProperties;
 
     @Override
-    public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
+    public Object postProcessBeforeInitialization(Object bean, String beanName)
+            throws BeansException {
         if (bean instanceof ConductorClientAutoConfiguration) {
             loadWorkerDomainConfig();
         }

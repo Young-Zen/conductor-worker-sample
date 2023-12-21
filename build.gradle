@@ -2,6 +2,7 @@ plugins {
     id 'org.springframework.boot' version '2.7.6'
     id 'io.spring.dependency-management' version '1.0.15.RELEASE'
     id 'java'
+    id "com.diffplug.spotless" version "6.23.3"
 }
 
 group = 'com.sz'
@@ -10,6 +11,27 @@ sourceCompatibility = '11'
 
 ext {
     conductorVersion = '3.13.8'
+}
+
+configure(allprojects) {
+    apply plugin: 'com.diffplug.spotless'
+
+    spotless {
+        format 'misc', {
+            // define the files to apply `misc` to
+            target '*.gradle', '.gitattributes', '.gitignore'
+
+            // define the steps to apply to those files
+            trimTrailingWhitespace()
+            indentWithSpaces()
+            endWithNewline()
+        }
+        java {
+            googleJavaFormat().aosp()
+            removeUnusedImports()
+            importOrder('java', 'javax', 'org', 'com', 'com.sz', '', '\\#com.sz', '\\#')
+        }
+    }
 }
 
 configurations {
@@ -48,3 +70,8 @@ dependencies {
 tasks.named('test') {
     useJUnitPlatform()
 }
+
+def hook = new File("$rootProject.projectDir/.git/hooks/pre-commit")
+hook.text = """#!/usr/bin/env bash
+./gradlew spotlessApply
+git add -A"""

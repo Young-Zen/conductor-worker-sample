@@ -9,5 +9,4 @@ public class ConductorWorkerSampleApplication {
     public static void main(String[] args) {
         SpringApplication.run(ConductorWorkerSampleApplication.class, args);
     }
-
 }
