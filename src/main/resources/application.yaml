@@ -4,6 +4,8 @@ server:
     context-path: /api/worker
 
 spring:
+  application:
+    name: conductor-worker-sample
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://mysql-service-address:3306/conductor?useUnicode=true&characterEncoding=utf8&autoReconnect=true&useSSL=false
@@ -23,6 +25,8 @@ spring:
     placeholder-replacement: false
 
 conductor:
+  metrics-prometheus:
+    enabled: true
   client:
     rootUri: http://conductor-server:5000/api/
     thread-count: 32
@@ -46,7 +50,11 @@ management:
   endpoints:
     web:
       exposure:
-        include: '*'
-    jmx:
-      exposure:
-        include: '*'
+        include: 'health,info,prometheus'
+  metrics:
+    export:
+      datadog:
+        enabled: ${conductor.metrics-datadog.enabled:false}
+        api-key: ${conductor.metrics-datadog.api-key:}
+    tags:
+      application: ${spring.application.name}

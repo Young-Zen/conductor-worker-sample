@@ -2,11 +2,15 @@ package com.sz.conductorworkersample;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Import;
+
+import com.netflix.conductor.contribs.metrics.PrometheusMetricsConfiguration;
 
 /**
  * @author Yanghj
  * @date 2023/12/21 19:32
  */
+@Import(PrometheusMetricsConfiguration.class)
 @SpringBootApplication
 public class ConductorWorkerSampleApplication {
 

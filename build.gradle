@@ -4,6 +4,7 @@ plugins {
     id 'java'
     id 'pmd'
     id "com.diffplug.spotless" version "6.23.3"
+    id 'com.gorylenko.gradle-git-properties' version '2.4.1'
 }
 
 group = 'com.sz'
@@ -70,6 +71,9 @@ dependencies {
     implementation 'mysql:mysql-connector-java'
 
     // Conductor
+    implementation("com.netflix.conductor:conductor-metrics:${conductorVersion}") {
+        exclude group: 'org.apache.logging.log4j', module: 'log4j-slf4j-impl'
+    }
     implementation("com.netflix.conductor:conductor-common:${conductorVersion}") {
         exclude group: 'org.apache.logging.log4j', module: 'log4j-slf4j-impl'
     }
@@ -88,6 +92,10 @@ dependencies {
 
 tasks.named('test') {
     useJUnitPlatform()
+}
+
+springBoot {
+    buildInfo()
 }
 
 def hook = new File("$rootProject.projectDir/.git/hooks/pre-commit")
