@@ -1,5 +1,5 @@
 plugins {
-    id 'org.springframework.boot' version '2.7.6'
+    id 'org.springframework.boot' version '2.7.18'
     id 'io.spring.dependency-management' version '1.0.15.RELEASE'
     id 'java'
     id 'pmd'
@@ -12,6 +12,7 @@ version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '11'
 
 ext {
+    set('springCloudVersion', "2021.0.9")
     conductorVersion = '3.13.8'
 }
 
@@ -68,7 +69,12 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
-    implementation 'mysql:mysql-connector-java'
+    implementation 'com.mysql:mysql-connector-j'
+
+    implementation('org.springframework.cloud:spring-cloud-starter-sleuth') {
+        exclude group: 'org.springframework.cloud', module: 'spring-cloud-sleuth-brave' //  We want to exclude the default tracer coming from Sleuth...
+    }
+    implementation 'org.springframework.cloud:spring-cloud-sleuth-otel-autoconfigure' // ... and we want to include the one coming from Spring Cloud Sleuth OTel
 
     // Conductor
     implementation("com.netflix.conductor:conductor-metrics:${conductorVersion}") {
@@ -80,6 +86,7 @@ dependencies {
     implementation("com.netflix.conductor:conductor-client-spring:${conductorVersion}") {
         exclude group: 'org.apache.logging.log4j', module: 'log4j-slf4j-impl'
     }
+    implementation('com.netflix.archaius:archaius-core:0.7.6')
     implementation('com.sun.jersey:jersey-client:1.19.4')
 
     implementation('org.flywaydb:flyway-core:7.15.0')
@@ -88,6 +95,13 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok'
     pmd "com.alibaba.p3c:p3c-pmd:2.1.1"
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+        mavenBom 'org.springframework.cloud:spring-cloud-sleuth-otel-dependencies:1.1.4'
+    }
 }
 
 tasks.named('test') {
