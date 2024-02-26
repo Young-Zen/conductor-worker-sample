@@ -51,10 +51,11 @@ management:
     web:
       exposure:
         include: 'health,info,prometheus'
-  metrics:
-    export:
-      datadog:
+  datadog:
+    metrics:
+      export:
         enabled: ${conductor.metrics-datadog.enabled:false}
         api-key: ${conductor.metrics-datadog.api-key:}
+  metrics:
     tags:
       application: ${spring.application.name}

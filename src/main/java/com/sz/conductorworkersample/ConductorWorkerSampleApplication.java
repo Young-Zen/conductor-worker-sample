@@ -5,18 +5,13 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Import;
 
 import com.netflix.conductor.client.spring.ConductorClientAutoConfiguration;
-import com.netflix.conductor.client.spring.ConductorWorkerAutoConfiguration;
 import com.netflix.conductor.contribs.metrics.PrometheusMetricsConfiguration;
 
 /**
  * @author Yanghj
  * @date 2023/12/21 19:32
  */
-@Import({
-    PrometheusMetricsConfiguration.class,
-    ConductorClientAutoConfiguration.class,
-    ConductorWorkerAutoConfiguration.class
-})
+@Import({PrometheusMetricsConfiguration.class, ConductorClientAutoConfiguration.class})
 @SpringBootApplication
 public class ConductorWorkerSampleApplication {
 
