@@ -101,7 +101,8 @@ dependencies {
 
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
-    pmd "com.alibaba.p3c:p3c-pmd:2.1.1"
+    // https://docs.pmd-code.org/latest/pmd_languages_java.html
+    pmd "io.github.godfather1103.p3c:p3c-pmd:2.1.1-ext-6"
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 

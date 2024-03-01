@@ -6,5 +6,6 @@ package com.sz.conductorworkersample.demo.service;
  */
 public interface DemoService {
 
+    /** async demo */
     void async();
 }
