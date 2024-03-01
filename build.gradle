@@ -11,6 +11,12 @@ group = 'com.sz'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '17'
 
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+}
+
 ext {
     set('springCloudVersion', "2023.0.0")
     conductorVersion = '3.17.0'
