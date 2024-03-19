@@ -8,7 +8,7 @@ spring:
     name: conductor-worker-sample
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://mysql-service-address:3306/conductor?useUnicode=true&characterEncoding=utf8&autoReconnect=true&useSSL=false
+    url: jdbc:mysql://mysql-service-address:3306/conductor?useUnicode=true&characterEncoding=utf8&autoReconnect=true
     username: root
     password: Mysql123Conductor
   flyway:
